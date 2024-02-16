@@ -104,16 +104,21 @@ static const Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkLtSymbol,          0,              Button1,        setlayout,       {0} },
+	{ ClkLtSymbol,          0,              Button3,        setlayout,       {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              Button2,        zoom,            {0} },
+	{ ClkStatusText,        0,              Button1,        clickstatustext, {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        movemouse,       {0} },
+	{ ClkClientWin,         MODKEY,         Button2,        togglefloating,  {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,     {0} },
+	{ ClkTagBar,            0,              Button1,        view,            {0} },
+	{ ClkTagBar,            0,              Button3,        toggleview,      {0} },
+	{ ClkTagBar,            MODKEY,         Button1,        tag,             {0} },
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,       {0} },
 };
 
+static const Launcher launchers[] = {
+  { 2, "io.gitlab.librewolf-community\0"},
+  { 2, "thunderbird\0"},
+  { 2, "/media/ssd_data/meins/my_scripts/test.sh\0"},
+}; 

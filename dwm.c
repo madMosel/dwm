@@ -133,6 +133,11 @@ typedef struct {
 } Key;
 
 typedef struct {
+  unsigned int width;
+  const void *v;
+} Launcher;
+
+typedef struct {
   const char *symbol;
   void (*arrange)(Monitor *);
 } Layout;
@@ -180,6 +185,7 @@ static void buttonpress(XEvent *e);
 static void checkotherwm(void);
 static void cleanup(void);
 static void cleanupmon(Monitor *mon);
+static void clickstatustext(const Arg *arg);
 static void clientmessage(XEvent *e);
 static void configure(Client *c);
 static void configurenotify(XEvent *e);
@@ -467,9 +473,15 @@ void buttonpress(XEvent *e) {
       arg.ui = 1 << i;
     } else if (ev->x < x + TEXTW(selmon->ltsymbol))
       click = ClkLtSymbol;
-    else if (ev->x > selmon->ww - (int)TEXTW(stext))
-      // TODO count symbols like in line 438
+    else if (ev->x > selmon->ww - (int)TEXTW(stext)) {
       click = ClkStatusText;
+			unsigned int char_width = (unsigned int) drw_fontset_getwidth(drw,"A");
+			int status_x = -2;
+			do {
+				status_x++;
+			} while (ev->x >= (x+= char_width));
+			arg.i = status_x;	
+    }
     else
       click = ClkWinTitle;
   } else if ((c = wintoclient(ev->window))) {
@@ -534,6 +546,25 @@ void cleanupmon(Monitor *mon) {
   XUnmapWindow(dpy, mon->barwin);
   XDestroyWindow(dpy, mon->barwin);
   free(mon);
+}
+
+void clickstatustext(const Arg *arg) {
+  int status_char = arg->i;
+	if (status_char < 1) { return; }
+  #include <fcntl.h>
+	int fd = open("click_status_text_arg_ui_value", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1) { return; }
+	char nr[4];
+	snprintf(nr, 4, "%d\n", status_char);
+  for (unsigned int bytesleft = sizeof(launchers), i=0, border=0; bytesleft > 0; i++) {
+    border += launchers[i].width;
+    if (arg->i < border) {
+      Arg arg;
+      arg.v = launchers[i].v;
+      spawn(&arg);
+    }
+    bytesleft -= sizeof(launchers[i]);
+  }
 }
 
 void clientmessage(XEvent *e) {
