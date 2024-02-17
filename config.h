@@ -62,6 +62,7 @@ static const char *austostartscript[] = {"/media/ssd_data/meins/my_scripts/dwm_s
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "j4-dmenu-desktop", "--use-xdg-de", NULL }; 
 static const char *termcmd[]  = { "kitty", NULL };
+static const char statusclickhandler[] = "/media/ssd_data/meins/my_scripts/dwm_statusclickhandler.sh\0";
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -76,7 +77,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -116,9 +117,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,             {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,       {0} },
 };
-
-static const Launcher launchers[] = {
-  { 2, "io.gitlab.librewolf-community\0"},
-  { 2, "thunderbird\0"},
-  { 2, "/media/ssd_data/meins/my_scripts/test.sh\0"},
-}; 
