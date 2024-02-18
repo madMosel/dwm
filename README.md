@@ -10,6 +10,8 @@ original:
 #### ---- Config ------------------------------------------
 - colors of border and dwmstatus are green instead of cyan
 border is 3px istead of 1
+- cycling monitors                        Shift + J/K
+- shifting windows with focus to screen   CTRL  + J/K
 
 
 #### ---- Features ----------------------------------------
@@ -20,9 +22,13 @@ with the character position of ClkStatusText. This script
 works as Clickhandler. ClkStatusText is set by a second 
 script (e.g quckstart-symbols + clock) that may be updated
 periodically.
-- tagfocusmon fuction to move window and focus. buggy.  
+- tagfocusmon fuction to move window and focus.   
 
-### ---- Problems ----------------------------------------------
+#### ---- Patched behavior -------------------------------
+- Pointer gets set to the topbar of the active monitor when
+calling tagmon
+
+#### ---- Problems ----------------------------------------------
 ##### .... focusmon ..........................................
 
 In a 3 monitor setup tagmon sometimes
@@ -35,3 +41,7 @@ This is intendend behavior. It happened because of the mouse
 was on monitor 1. If the window is shifted to the mouse pos
 enternotify is called. This calls focus and the focus gets
 shifted.
+
+Dirty workaround is to move the pointer to the topbar 
+programmatically to the bar in tagmon before is called. 
+TODO oly do so if pointer in the way.

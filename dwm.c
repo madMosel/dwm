@@ -20,6 +20,7 @@
  *
  * To understand everything else, start reading main().
  */
+#include <X11/X.h>
 #include <errno.h>
 #include <locale.h>
 #include <signal.h>
@@ -128,7 +129,7 @@ struct Monitor {
 	Client *sel;
 	Client *stack;
 	Monitor *next;
-	Window barwin;
+Window barwin;
 	const Layout *lt[2];
 };
 
@@ -1710,6 +1711,7 @@ tag(const Arg *arg)
 void
 tagmon(const Arg *arg)
 {
+  XWarpPointer(dpy, None, selmon->barwin, 0, 0, 0, 0, selmon->mw/2, 0);
 	if (!selmon->sel || !mons->next)
 		return;
 	sendmon(selmon->sel, dirtomon(arg->i));

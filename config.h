@@ -85,10 +85,10 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_k,      focusmon,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,      focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_Right,  tagfocusmon,    {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_Left,   tagfocusmon,    {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_k,      focusmon,       {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_j,      focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,   tagfocusmon,    {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,   tagfocusmon,    {.i = +1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
