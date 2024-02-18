@@ -22,10 +22,16 @@ script (e.g quckstart-symbols + clock) that may be updated
 periodically.
 - tagfocusmon fuction to move window and focus. buggy.  
 
-### ---- Bugs ----------------------------------------------
+### ---- Problems ----------------------------------------------
 ##### .... focusmon ..........................................
-incosistent behavior. In a 3 monitor setup tagmon sometimes
+
+In a 3 monitor setup tagmon sometimes
 shifts the focus with the window and sometimes not. Shifting
 client from Monitor 0->1 drags the focus. Shifting form 2->1
 drags the focus. Shifting from 1->0, 1->2, 0->2, 2->0 moves 
 the client but focus remains on the monitor.
+
+This is intendend behavior. It happened because of the mouse
+was on monitor 1. If the window is shifted to the mouse pos
+enternotify is called. This calls focus and the focus gets
+shifted.
