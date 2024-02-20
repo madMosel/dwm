@@ -25,23 +25,9 @@ periodically.
 - tagfocusmon fuction to move window and focus.   
 
 #### ---- Patched behavior -------------------------------
-- Pointer gets set to the topbar of the active monitor when
-calling tagmon
+- Mouse pointer gets set to the bar of the active monitor 
+  when calling tagmon. This prevents the shifted whindow
+  from being focused when it gets shifted into the mouse.
+- Mouse pointer gets set to the bar of the focused monitor
+  when calling focusmon.
 
-#### ---- Problems ----------------------------------------------
-##### .... focusmon ..........................................
-
-In a 3 monitor setup tagmon sometimes
-shifts the focus with the window and sometimes not. Shifting
-client from Monitor 0->1 drags the focus. Shifting form 2->1
-drags the focus. Shifting from 1->0, 1->2, 0->2, 2->0 moves 
-the client but focus remains on the monitor.
-
-This is intendend behavior. It happened because of the mouse
-was on monitor 1. If the window is shifted to the mouse pos
-enternotify is called. This calls focus and the focus gets
-shifted.
-
-Dirty workaround is to move the pointer to the topbar 
-programmatically to the bar in tagmon before is called. 
-TODO oly do so if pointer in the way.
