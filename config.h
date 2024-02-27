@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
@@ -21,16 +22,18 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class      instance    title                   tags mask     isfloating   monitor */
+	{ "Gimp",     NULL,       NULL,                   0,            1,           -1 },
+	{ "Firefox",  NULL,       NULL,                   1 << 8,       0,           -1 },
+  { "kcalc",    NULL,       NULL,                   0,            1,           -1 },
+  { "Toolkit",  NULL,       "Picture-in-Picture",   0,            1,           -1 },     // Firefox pic-in-pic
 };
 
 /* layout(s) */
@@ -59,10 +62,15 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *austostartscript[] = {"/media/ssd_data/meins/my_scripts/dwm_start.sh", NULL};
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "j4-dmenu-desktop", "--use-xdg-de", NULL }; 
-static const char *termcmd[]  = { "kitty", NULL };
-static const char statusclickhandler[] = "/media/ssd_data/meins/my_scripts/dwm_statusclickhandler.sh\0";
+static char dmenumon[2]                  = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[]            = { "j4-dmenu-desktop", "--use-xdg-de", NULL }; 
+static const char *termcmd[]             = { "kitty", NULL };
+static const char statusclickhandler[]   = "/media/ssd_data/meins/my_scripts/dwm_statusclickhandler.sh\0";
+static const char *fileexplorer[]        = {"thunar", NULL};
+static const char *browser[]             = { "io.gitlab.librewolf-community", NULL };
+static const char *upvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -89,16 +97,25 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask,           XK_j,      focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,      tagfocusmon,    {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      tagfocusmon,    {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_Right,  focusmon,       {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_Left,   focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_Right,  tagfocusmon,    {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_Left,   tagfocusmon,    {.i = +1 } },
+  { MODKEY,                       XK_e,      spawn,          {.v = fileexplorer} },
+  { MODKEY,                       XK_w,      spawn,          {.v = browser} },
+  { 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+	{ 0,                            XF86XK_AudioMute, spawn, {.v = mutevol } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ControlMask,             XK_q,      quit,           {0} },
+	// TAGKEYS(                        XK_6,                      5)
+	// TAGKEYS(                        XK_7,                      6)
+	// TAGKEYS(                        XK_8,                      7)
+	// TAGKEYS(                        XK_9,                      8)
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
